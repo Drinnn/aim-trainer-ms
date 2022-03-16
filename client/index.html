@@ -5,6 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aim Trainer</title>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+      }
+      #shape {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        display: none;
+        position: relative;
+      }
+      .bold {
+        font-weight: bold;
+      }
+    </style>
   </head>
-  <body></body>
+
+  <body>
+    <h1>Test your Aim</h1>
+    <p>Click on the elements as quickly as you can!</p>
+    <p class="bold">Time taken: <span id="timeTaken"></span></p>
+    <p class="bold">Best time: <span id="bestTime"></span></p>
+
+    <div id="shape"></div>
+
+    <script type="text/javascript">
+      let currentTime = new Date().getTime();
+      let bestTime = Number.MAX_SAFE_INTEGER;
+
+      let shapeSize = 500;
+
+      function getRandomColor() {
+        const hexadecimal = '0123456789ABCDEF';
+        let color = '#';
+
+        for (let i = 0; i < 6; i++) {
+          color += hexadecimal[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+      }
+
+      function drawShape() {
+        const top = Math.random() * shapeSize;
+        const left = Math.random() * shapeSize;
+        const width = (Math.random() * shapeSize) / 2 + 100;
+
+        const shapeElement = document.getElementById('shape');
+
+        if (Math.random() > 0.5) {
+          shapeElement.style.borderRadius = '50%';
+        } else {
+          shapeElement.style.borderRadius = '0';
+        }
+
+        shapeElement.style.width = `${width}px`;
+        shapeElement.style.height = `${width}px`;
+
+        shapeElement.style.top = `${top}px`;
+        shapeElement.style.left = `${left}px`;
+
+        shapeElement.style.display = 'block';
+        shapeElement.style.backgroundClip = getRandomColor();
+
+        currentTime = new Date().getTime();
+      }
+
+      function drawAfterDelay() {
+        setTimeout(drawShape, Math.random() * 2000);
+      }
+
+      drawAfterDelay();
+
+      document.getElementById('shape').addEventListener('click', () => {
+        document.getElementById('shape').style.display = 'none';
+
+        const endTime = new Date().getTime();
+        const timeTaken = (endTime - currentTime) / 1000;
+
+        document.getElementById('timeTaken').innerHTML = `${timeTaken}s`;
+        if (timeTaken < bestTime) {
+          bestTime = timeTaken;
+          document.getElementById('bestTime').innerHTML = `${bestTime}s`;
+        }
+
+        drawAfterDelay();
+      });
+    </script>
+  </body>
 </html>
