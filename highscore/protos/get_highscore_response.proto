@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package protos;
+option go_package = "github.com/Drinnn/aim-trainer-ms/highscore/protos";
+
+message GetHighscoreResponse {
+    double highscore = 1;
+}
