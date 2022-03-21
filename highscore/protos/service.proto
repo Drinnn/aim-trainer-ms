@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package protos;
+option go_package = "github.com/Drinnn/aim-trainer-ms/highscore/protos";
+
+import "google/protobuf/empty.proto";
+import "set_highscore_request.proto";
+import "set_highscore_response.proto";
+import "get_highscore_response.proto";
+
+service Highscore {
+    rpc SetHighscore(SetHighscoreRequest) returns (SetHighscoreResponse);
+    rpc GetHighscore(google.protobuf.Empty) returns (GetHighscoreResponse);
+}
